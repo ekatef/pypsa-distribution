@@ -142,18 +142,18 @@ rule cluster_buildings:
 rule build_renewable_profiles:
     input:
         natura=pypsaearth("resources/natura.tiff"),
-        copernicus=pypsaearth(
-            "data/copernicus/PROBAV_LC100_global_v3.0.1_2019-nrt_Discrete-Classification-map_EPSG-4326.tif"
-        ),
-        gebco=pypsaearth("data/gebco/GEBCO_2021_TID.nc"),
         country_shapes=pypsaearth("resources/shapes/country_shapes.geojson"),
         offshore_shapes=pypsaearth("resources/shapes/offshore_shapes.geojson"),
+        copernicus="pypsa-earth/data/copernicus/PROBAV_LC100_global_v3.0.1_2019-nrt_Discrete-Classification-map_EPSG-4326.tif",
+        gebco="pypsa-earth/data/gebco/GEBCO_2021_TID.nc",
         hydro_capacities="pypsa-earth/data/hydro_capacities.csv",
         eia_hydro_generation="pypsa-earth/data/eia_hydro_annual_generation.csv",
         powerplants="resources/powerplants.csv",
         regions="resources/shapes/microgrid_bus_shapes.geojson",
-        cutout=lambda w: pypsaearth(
-            "cutouts/" + config["renewable"][w.technology]["cutout"] + ".nc"
+        cutout=lambda w: (
+            "pypsa-earth/cutouts/"
+            + config["renewable"][w.technology]["cutout"]
+            + ".nc"
         ),
     output:
         profile="resources/renewable_profiles/profile_{technology}.nc",
